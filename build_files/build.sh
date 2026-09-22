@@ -14,7 +14,7 @@ cp -avf "/ctx/system_files"/. /
 
 # this installs a package from fedora repos
 dnf5 install -y steam mangohud
-
+dnf5 remove -y gnome-system-monitor
 # Optional services and stuff to remove
 # TODO:
 # check if exists
