@@ -4,9 +4,11 @@ COPY build_files /
 COPY system_files /system_files
 
 # Base Image
-FROM ghcr.io/projectbluefin/bluefin-nvidia:stable
+FROM ghcr.io/ublue-os/bluefin-nvidia-open:stable
 
 # Ublue Silverblue base image: ghcr.io/ublue-os/silverblue-main:latest
+# Bluefin Classic: ghcr.io/ublue-os/bluefin-nvidia-open:stable
+# Bluefin Transition Mode (kinda scrapped): ghcr.io/projectbluefin/bluefin-nvidia:stable
 
 # Universal Blue Images: https://github.com/orgs/ublue-os/packages
 # Fedora base image: quay.io/fedora/fedora-bootc:44
