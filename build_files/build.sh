@@ -15,6 +15,23 @@ cp -avf "/ctx/system_files"/. /
 # this installs a package from fedora repos
 dnf5 install -y steam mangohud
 
+# Optional services and stuff to remove
+# TODO:
+# check if exists
+# systemctl disable ublue-os-media-automount.service
+# dnf5 remove -y ublue-os-media-automount-ude
+
+# Rebrand
+# TODO:
+# Learn which files to mv
+
+# Release
+# TODO: make actual svgs
+
+# sed -i "s/^NAME=.*/NAME=\"Pyrite\"/" /usr/lib/os-release
+# sed -i "s/^PRETTY_NAME=.*/PRETTY_NAME=\"Pyrite\"/" /usr/lib/os-release
+# sed -i "s/^LOGO=.*/LOGO=pyrite-icon/" /usr/lib/os-release
+
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging

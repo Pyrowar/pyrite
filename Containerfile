@@ -6,6 +6,8 @@ COPY system_files /system_files
 # Base Image
 FROM ghcr.io/projectbluefin/bluefin-nvidia:stable
 
+# Ublue Silverblue base image: ghcr.io/ublue-os/silverblue-main:latest
+
 # Universal Blue Images: https://github.com/orgs/ublue-os/packages
 # Fedora base image: quay.io/fedora/fedora-bootc:44
 # CentOS base images: quay.io/centos-bootc/centos-bootc:stream10
