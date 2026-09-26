@@ -18,7 +18,8 @@ dnf5 install -y gnome-shell-extension-caffeine \
 	firewall-config \
 	openssh-askpass \
 	gnome-tweaks \
-	syncthing
+	syncthing \
+	sushi
 	
 dnf5 remove -y gnome-software \
 	gnome-extensions-app \
