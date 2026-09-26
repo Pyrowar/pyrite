@@ -17,6 +17,7 @@ dnf5 install -y gnome-shell-extension-caffeine \
 	nautilus-gsconnect \
 	firewall-config \
 	openssh-askpass \
+	gnome-tweaks \
 	syncthing
 	
 dnf5 remove -y gnome-software \
