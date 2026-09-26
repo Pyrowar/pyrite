@@ -2,12 +2,12 @@ set dotenv-filename := "image-template.env"
 set dotenv-load
 
 export image_name := env_var("IMAGE_NAME")
-export repo_organization := env_var("REPO_ORGANIZATION")
-export image_desc := env_var("IMAGE_DESC")
-export image_keywords := env_var("IMAGE_KEYWORDS")
-export image_logo_url := env_var("IMAGE_LOGO_URL")
-export default_tag := env_var("DEFAULT_TAG")
-export bib_image := env_var("BIB_IMAGE")
+# export repo_organization := env_var("REPO_ORGANIZATION")
+# export image_desc := env_var("IMAGE_DESC")
+# export image_keywords := env_var("IMAGE_KEYWORDS")
+# export image_logo_url := env_var("IMAGE_LOGO_URL")
+# export default_tag := env_var("DEFAULT_TAG")
+# export bib_image := env_var("BIB_IMAGE")
 export fedora_version := env_var_or_default("FEDORA_VERSION", "44")
 
 alias build-vm := build-qcow2
