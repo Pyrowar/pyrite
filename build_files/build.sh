@@ -19,7 +19,8 @@ dnf5 install -y gnome-shell-extension-caffeine \
 	openssh-askpass \
 	syncthing
 	
-dnf5 remove -y gnome-extensions-app \
+dnf5 remove -y gnome-software \
+	gnome-extensions-app \
 	gnome-classic-session \
 	gnome-shell-extension-background-logo \
         gnome-shell-extension-apps-menu \
