@@ -2,13 +2,15 @@ set dotenv-filename := "image-template.env"
 set dotenv-load
 
 export image_name := env_var("IMAGE_NAME")
+export fedora_version := env_var("FEDORA_VERSION")
+export default_tag := env_var("DEFAULT_TAG")
+export bib_image := env_var("BIB_IMAGE")
+
+# ArtifactHub stuff:
 # export repo_organization := env_var("REPO_ORGANIZATION")
 # export image_desc := env_var("IMAGE_DESC")
 # export image_keywords := env_var("IMAGE_KEYWORDS")
 # export image_logo_url := env_var("IMAGE_LOGO_URL")
-# export default_tag := env_var("DEFAULT_TAG")
-# export bib_image := env_var("BIB_IMAGE")
-export fedora_version := env_var_or_default("FEDORA_VERSION", "44")
 
 alias build-vm := build-qcow2
 alias rebuild-vm := rebuild-qcow2
@@ -105,24 +107,24 @@ build $target_image=image_name $tag=default_tag $kernel_flavor="main":
     LABELS=()
     if [[ -z "$(git status -s)" ]]; then
         GIT_SHA=$(git rev-parse --short HEAD)
-        LABELS+=("--label" "io.artifacthub.package.readme-url=https://raw.githubusercontent.com/{{ repo_organization }}/{{ image_name }}/${GIT_SHA}/README.md")
-        LABELS+=("--label" "org.opencontainers.image.documentation=https://raw.githubusercontent.com/{{ repo_organization }}/{{ image_name }}/${GIT_SHA}/README.md")
-        LABELS+=("--label" "org.opencontainers.image.source=https://github.com/{{ repo_organization }}/{{ image_name }}/blob/${GIT_SHA}/Containerfile")
-        LABELS+=("--label" "org.opencontainers.image.url=https://github.com/{{ repo_organization }}/{{ image_name }}/tree/${GIT_SHA}")
-        LABELS+=("--label" "org.opencontainers.image.version={{ default_tag }}.$(date +%Y%m%d)-${GIT_SHA}")
+	LABELS+=("--label" "org.opencontainers.image.version={{ default_tag }}.$(date +%Y%m%d)-${GIT_SHA}")
+        # LABELS+=("--label" "io.artifacthub.package.readme-url=https://raw.githubusercontent.com/{{ repo_organization }}/{{ image_name }}/${GIT_SHA}/README.md")
+        # LABELS+=("--label" "org.opencontainers.image.documentation=https://raw.githubusercontent.com/{{ repo_organization }}/{{ image_name }}/${GIT_SHA}/README.md")
+        # LABELS+=("--label" "org.opencontainers.image.source=https://github.com/{{ repo_organization }}/{{ image_name }}/blob/${GIT_SHA}/Containerfile")
+        # LABELS+=("--label" "org.opencontainers.image.url=https://github.com/{{ repo_organization }}/{{ image_name }}/tree/${GIT_SHA}")
     fi
 
     # Image metadata for https://artifacthub.io/ - This is optional but is highly recommended so we all can get a index of all the custom images
     # The metadata by itself is not going to do anything, you choose if you want your image to be on ArtifactHub or not.
-    LABELS+=("--label" "io.artifacthub.package.deprecated=false")
-    LABELS+=("--label" "io.artifacthub.package.keywords={{ image_keywords }}")
-    LABELS+=("--label" "io.artifacthub.package.license=Apache-2.0")
-    LABELS+=("--label" "io.artifacthub.package.logo-url={{ image_logo_url }}")
-    LABELS+=("--label" "io.artifacthub.package.prerelease=false")
+    # LABELS+=("--label" "io.artifacthub.package.deprecated=false")
+    # LABELS+=("--label" "io.artifacthub.package.keywords={{ image_keywords }}")
+    # LABELS+=("--label" "io.artifacthub.package.license=Apache-2.0")
+    # LABELS+=("--label" "io.artifacthub.package.logo-url={{ image_logo_url }}")
+    # LABELS+=("--label" "io.artifacthub.package.prerelease=false")
     LABELS+=("--label" "org.opencontainers.image.created=$(date -u +%Y\-%m\-%d\T%H\:%M\:%S\Z)")
-    LABELS+=("--label" "org.opencontainers.image.description={{ image_desc }}")
+    # LABELS+=("--label" "org.opencontainers.image.description={{ image_desc }}")
     LABELS+=("--label" "org.opencontainers.image.title={{ image_name }}")
-    LABELS+=("--label" "org.opencontainers.image.vendor={{ repo_organization }}")
+    # LABELS+=("--label" "org.opencontainers.image.vendor={{ repo_organization }}")
 
     # This actually builds the image!
     PODMAN_BUILD_ARGS=("${BUILD_ARGS[@]}" "${LABELS[@]}" --pull=newer --tag "${target_image}:${tag}" --file Containerfile)
