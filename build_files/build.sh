@@ -24,6 +24,30 @@ dnf5 remove -y gnome-system-monitor
 # Podman
 systemctl enable podman.socket
 
+
+# User and Group fix taken from bazzite:
+if [ -f /etc/passwd ]; then
+    out=$(grep -v "root" /etc/passwd) || true
+    if [ -n "$out" ]; then
+        echo
+        echo Moving the following passwd users to /usr/lib/passwd
+        echo "$out"
+        echo "$out" >> /usr/lib/passwd
+        echo "root:x:0:0:root:/root:/bin/bash" > /etc/passwd
+    fi
+fi
+if [ -f /etc/group ]; then
+    out=$(grep -v "root\|wheel" /etc/group) || true
+    if [ -n "$out" ]; then
+        echo
+        echo Moving the following group entries to /usr/lib/group
+        echo "$out"
+        echo "$out" >> /usr/lib/group
+        echo "root:x:0:" > /etc/group
+        echo "wheel:x:10:" >> /etc/group
+    fi
+fi
+
 # Use a COPR Example:
 # dnf5 -y copr enable ublue-os/staging
 # dnf5 -y install package

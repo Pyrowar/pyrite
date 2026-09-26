@@ -38,6 +38,18 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     KERNEL_FLAVOR=${KERNEL_FLAVOR} /ctx/build.sh
+    
+### HOMEBREW
+## Copies Homebrew files from ublue-os/brew and enables its setup/update/upgrade services.
+## On first boot, brew-setup.service extracts Homebrew to /var/home/linuxbrew/.linuxbrew.
+
+COPY --from=ghcr.io/ublue-os/brew:latest /system_files /
+RUN --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    /usr/bin/systemctl preset brew-setup.service && \
+    /usr/bin/systemctl preset brew-update.timer && \
+    /usr/bin/systemctl preset brew-upgrade.timer
 
 ### LINTING
 ## Verify final image and contents are correct.
