@@ -8,6 +8,7 @@ export image_keywords := env_var("IMAGE_KEYWORDS")
 export image_logo_url := env_var("IMAGE_LOGO_URL")
 export default_tag := env_var("DEFAULT_TAG")
 export bib_image := env_var("BIB_IMAGE")
+export fedora_version := env_var_or_default("FEDORA_VERSION", "44")
 
 alias build-vm := build-qcow2
 alias rebuild-vm := rebuild-qcow2
@@ -93,12 +94,14 @@ sudoif command *args:
 #
 
 # Build the image using the specified parameters
-build $target_image=image_name $tag=default_tag:
+build $target_image=image_name $tag=default_tag $kernel_flavor="main":
     #!/usr/bin/env bash
 
     set -euox pipefail
 
     BUILD_ARGS=()
+    BUILD_ARGS+=("--build-arg" "KERNEL_FLAVOR={{ kernel_flavor }}")
+    BUILD_ARGS+=("--build-arg" "FEDORA_VERSION={{ fedora_version }}")
     LABELS=()
     if [[ -z "$(git status -s)" ]]; then
         GIT_SHA=$(git rev-parse --short HEAD)

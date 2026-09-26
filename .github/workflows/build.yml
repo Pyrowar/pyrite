@@ -24,6 +24,15 @@ jobs:
   build_push:
     name: Build and push image
     runs-on: ubuntu-26.04
+    
+  strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image_name: liquid-pyrite
+            kernel_flavor: main
+          - image_name: volatile-pyrite
+            kernel_flavor: ogc
 
     permissions:
       contents: read
@@ -66,29 +75,33 @@ jobs:
           echo "IMAGE_REGISTRY=${IMAGE_REGISTRY,,}" >> ${GITHUB_ENV}
           echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
 
-      # This actually builds the container image
+      # This actually builds the container image.
+      # `kernel_flavor` selects the akmods-nvidia-open/kernel layer in the
+      # Containerfile:
+      #   liquid-pyrite   -> main (stock Fedora kernel)
+      #   volatile-pyrite -> ogc  (OGC kernel)
       - name: Build Image
         id: build-image
         run: |
           just build \
             ${IMAGE_NAME} \
-            ${DEFAULT_TAG}
+            ${DEFAULT_TAG} \
+            ${{ matrix.kernel_flavor }}
 
-      # This is optional, this provides smaller delta updates
-      - name: Rechunk with rpm-ostree
+      # Use the new distro agnostic rechunker
+      # https://github.com/coreos/chunkah
+      - name: Rechunk with Chunkah
         id: rechunk
         run: |
-          just ostree-rechunk \
+          just rechunk \
             ${IMAGE_NAME} \
             ${DEFAULT_TAG}
 
-      # If you are feeling adventurous, use the new distro agnostic rechunker
-      # https://github.com/coreos/chunkah
-      # You can delete the Rechunk with rpm-ostree portion then if you use this
-      #- name: Rechunk with Chunkah
+      # This is the old cruft
+      # - name: Rechunk with rpm-ostree
       #  id: rechunk
       #  run: |
-      #    just rechunk \
+      #    just ostree-rechunk \
       #      ${IMAGE_NAME} \
       #      ${DEFAULT_TAG}
 
