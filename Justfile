@@ -106,7 +106,7 @@ build $target_image=image_name $tag=default_tag $kernel_flavor="main":
     BUILD_ARGS+=("--build-arg" "FEDORA_VERSION={{ fedora_version }}")
     LABELS=()
     if [[ -z "$(git status -s)" ]]; then
-        GIT_SHA=$(git rev-parse --short HEAD)
+    	GIT_SHA=$(git rev-parse --short HEAD)
 	LABELS+=("--label" "org.opencontainers.image.version={{ default_tag }}.$(date +%Y%m%d)-${GIT_SHA}")
         # LABELS+=("--label" "io.artifacthub.package.readme-url=https://raw.githubusercontent.com/{{ repo_organization }}/{{ image_name }}/${GIT_SHA}/README.md")
         # LABELS+=("--label" "org.opencontainers.image.documentation=https://raw.githubusercontent.com/{{ repo_organization }}/{{ image_name }}/${GIT_SHA}/README.md")
