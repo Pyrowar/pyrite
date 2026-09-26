@@ -56,11 +56,8 @@ jobs:
           just check
 
       - name: Image Name
-        id: image-name
         run: |
-          IMAGE_NAME=$(just image_name)
-
-          echo "IMAGE_NAME=${IMAGE_NAME}" >> $GITHUB_ENV
+          echo "IMAGE_NAME=${{ matrix.image_name }}" >> $GITHUB_ENV
 
       - name: Default Tag
         id: gen-default-tag
