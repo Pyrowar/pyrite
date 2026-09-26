@@ -12,10 +12,20 @@ dnf5 install -y gnome-shell-extension-caffeine \
 	gnome-shell-extension-blur-my-shell \
 	gnome-shell-extension-dash-to-dock \
 	gnome-shell-extension-appindicator \
-	nautilus-gsconnect
+	gnome-shell-extension-user-theme \
+	gnome-shell-extension-gsconnect \
+	nautilus-gsconnect \
+	firewall-config \
+	openssh-askpass \
+	syncthing
 	
-dnf5 remove -y gnome-system-monitor
-# remove weak dependencies: gnome-extensions-app
+dnf5 remove -y gnome-extensions-app \
+	gnome-classic-session \
+	gnome-shell-extension-background-logo \
+        gnome-shell-extension-apps-menu \
+        gnome-shell-extension-launch-new-instance \
+        gnome-shell-extension-places-menu \
+        gnome-shell-extension-window-list
 
 # Libvirt
 # dnf5 install -y qemu libvirt guestfs-tools
@@ -23,7 +33,6 @@ dnf5 remove -y gnome-system-monitor
 
 # Podman
 systemctl enable podman.socket
-
 
 # User and Group fix taken from bazzite:
 if [ -f /etc/passwd ]; then
