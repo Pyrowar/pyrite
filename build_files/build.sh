@@ -19,8 +19,10 @@ dnf5 install -y gnome-shell-extension-caffeine \
 	openssh-askpass \
 	gnome-tweaks \
 	syncthing \
-	sushi
-	
+	sushi \
+	yaru-theme \
+	emacs
+
 dnf5 remove -y gnome-software \
 	gnome-extensions-app \
 	gnome-classic-session \
@@ -72,10 +74,10 @@ if [[ "${KERNEL_FLAVOR}" == "ogc" ]]; then
     # the RPM transaction. Both write through /tmp (tmpfs, a different
     # device than the overlay root) and fail with EXDEV. We regenerate
     # the initramfs explicitly ourselves, later in this script.
-    
+
     # Modern problems require Bloatzzite solutions.
     # From bazzite/build_files/install-kernel-akmods
-    
+
     pushd /usr/lib/kernel/install.d
     mv 05-rpmostree.install 05-rpmostree.install.bak
     mv 50-dracut.install 50-dracut.install.bak
@@ -94,7 +96,7 @@ if [[ "${KERNEL_FLAVOR}" == "ogc" ]]; then
 
     dnf5 versionlock add kernel kernel-core kernel-modules 2>/dev/null || true
     # Do we restore the real 05-rpmostree.install/50-dracut.install? Dude, I don't know.
-    
+
     # Kernel package layout assumes a traditional (non-ostree) /boot
     # bootc populates /boot from /usr/lib/modules at deploy time.
     find /boot -mindepth 1 -delete
