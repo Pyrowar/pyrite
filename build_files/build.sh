@@ -17,10 +17,8 @@ dnf5 install -y gnome-shell-extension-caffeine \
 	nautilus-gsconnect \
 	firewall-config \
 	openssh-askpass \
-	gnome-tweaks \
 	syncthing \
 	sushi \
-	yaru-theme \
 	emacs
 
 dnf5 remove -y gnome-software \
@@ -31,6 +29,10 @@ dnf5 remove -y gnome-software \
         gnome-shell-extension-launch-new-instance \
         gnome-shell-extension-places-menu \
         gnome-shell-extension-window-list
+
+sudo dnf5 -y copr enable yannmasoch/nautilus-my-computer
+sudo dnf5 -y install nautilus-my-computer
+sudo dnf5 -y copr disable yannmasoch/nautilus-my-computer
 
 # Libvirt
 # dnf5 install -y qemu libvirt guestfs-tools
@@ -61,12 +63,6 @@ if [ -f /etc/group ]; then
         echo "wheel:x:10:" >> /etc/group
     fi
 fi
-
-# Use a COPR Example:
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
 
 # Swap the stock Fedora kernel for the OGC kernel
 if [[ "${KERNEL_FLAVOR}" == "ogc" ]]; then
