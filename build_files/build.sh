@@ -30,9 +30,9 @@ dnf5 remove -y gnome-software \
         gnome-shell-extension-places-menu \
         gnome-shell-extension-window-list
 
-sudo dnf5 -y copr enable yannmasoch/nautilus-my-computer
-sudo dnf5 -y install nautilus-my-computer
-sudo dnf5 -y copr disable yannmasoch/nautilus-my-computer
+dnf5 -y copr enable yannmasoch/nautilus-my-computer
+dnf5 -y install nautilus-my-computer
+dnf5 -y copr disable yannmasoch/nautilus-my-computer
 
 # Libvirt
 # dnf5 install -y qemu libvirt guestfs-tools
