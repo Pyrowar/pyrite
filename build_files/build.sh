@@ -25,14 +25,10 @@ dnf5 remove -y gnome-software \
 	gnome-extensions-app \
 	gnome-classic-session \
 	gnome-shell-extension-background-logo \
-        gnome-shell-extension-apps-menu \
-        gnome-shell-extension-launch-new-instance \
-        gnome-shell-extension-places-menu \
-        gnome-shell-extension-window-list
-
-dnf5 -y copr enable yannmasoch/nautilus-my-computer
-dnf5 -y install nautilus-my-computer
-dnf5 -y copr disable yannmasoch/nautilus-my-computer
+    gnome-shell-extension-apps-menu \
+    gnome-shell-extension-launch-new-instance \
+    gnome-shell-extension-places-menu \
+    gnome-shell-extension-window-list
 
 # Libvirt
 # dnf5 install -y qemu libvirt guestfs-tools
@@ -124,7 +120,6 @@ QUALIFIED_KERNEL="$(dnf5 repoquery --installed --queryformat='%{evr}.%{arch}' ke
 chmod 0600 "/usr/lib/modules/$QUALIFIED_KERNEL/initramfs.img"
 
 ### Cleanup
-rm -rf /run/dnf /run/selinux-policy /tmp/* 2>/dev/null || true
 rm -rf /run/dnf /run/selinux-policy /tmp/* 2>/dev/null || true
 
 # XKB compiled cache dir from the nvidia driver post-install.
