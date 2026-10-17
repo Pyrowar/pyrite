@@ -11,7 +11,8 @@ FROM ghcr.io/ublue-os/akmods:${KERNEL_FLAVOR}-${FEDORA_VERSION} AS akmods-kernel
 FROM ghcr.io/ublue-os/akmods-nvidia-open:${KERNEL_FLAVOR}-${FEDORA_VERSION} AS akmods-nvidia
 
 # Base Image
-FROM ghcr.io/ublue-os/silverblue-main:latest
+FROM quay.io/fedora-ostree-desktops/silverblue:${FEDORA_VERSION}
+# quay.io/fedora/fedora-bootc:${FEDORA_VERSION}
 
 ARG KERNEL_FLAVOR
 
@@ -38,7 +39,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     KERNEL_FLAVOR=${KERNEL_FLAVOR} /ctx/build.sh
-    
+
 ### HOMEBREW
 ## Copies Homebrew files from ublue-os/brew and enables its setup/update/upgrade services.
 ## On first boot, brew-setup.service extracts Homebrew to /var/home/linuxbrew/.linuxbrew.
